@@ -28,7 +28,7 @@ def notification2():
 
 
 @app.route('/notifications', methods=["POST"])
-def notification2():
+def notification3():
     print("i got notification")
     print(request.data)
 

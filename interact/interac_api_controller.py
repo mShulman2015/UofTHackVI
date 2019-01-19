@@ -22,43 +22,44 @@ data_lock = threading.Lock()
 check_completed_payments_thread = threading.Thread()
 
 
-def _interrupt():
-    global check_completed_payments_thread
-    check_completed_payments_thread.cancel()
+# def _interrupt():
+#     global check_completed_payments_thread
+#     check_completed_payments_thread.cancel()
+#
+#
+# def _check_unfulfilled_requests():
+#     global unfulfilled_payment_requests
+#     global check_completed_payments_thread
+#     with data_lock:
+#         print("data_lock")
+#         cur = conn.cursor()
+#         cur.execute("SELECT reference_num, cid from payment where fufilled='f'")
+#         rows = cur.fetchall()
+#         for row in rows:
+#             reference_num = row[0]
+#             car_id = row[1]
+#             money_req = interac_api.get_money_request(reference_num)
+#
+#             if money_req["status"] == 7 or money_req["status"] == 3:
+#                 print(money_req, "\n")
+#                 cur = conn.cursor()
+#                 cur.execute("UPDATE payment SET fufilled='t' WHERE reference_num='{}'".format(reference_num))
+#                 #TODO: unlock car
+#
+#     # Set the next thread to happen
+#     check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
+#     check_completed_payments_thread.start()
 
+#
+# def fetch_and_process_fulfilled_requests():
+#     global check_completed_payments_thread, unfulfilled_payment_requests
+#     # unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
+#     check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
+#     check_completed_payments_thread.start()
+#
+# fetch_and_process_fulfilled_requests()
+# atexit.register(_interrupt)
 
-def _check_unfulfilled_requests():
-    global unfulfilled_payment_requests
-    global check_completed_payments_thread
-    with data_lock:
-        print("data_lock")
-        cur = conn.cursor()
-        cur.execute("SELECT reference_num, cid from payment where fufilled='f'")
-        rows = cur.fetchall()
-        for row in rows:
-            reference_num = row[0]
-            car_id = row[1]
-            money_req = interac_api.get_money_request(reference_num)
-
-            if money_req["status"] == 7 or money_req["status"] == 3:
-                print(money_req, "\n")
-                cur = conn.cursor()
-                cur.execute("UPDATE payment SET fufilled='t' WHERE reference_num='{}'".format(reference_num))
-                #TODO: unlock car
-
-    # Set the next thread to happen
-    check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
-    check_completed_payments_thread.start()
-
-
-def fetch_and_process_fulfilled_requests():
-    global check_completed_payments_thread, unfulfilled_payment_requests
-    # unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
-    check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
-    check_completed_payments_thread.start()
-
-fetch_and_process_fulfilled_requests()
-atexit.register(_interrupt)
 app = Flask(__name__)
 
 
@@ -71,23 +72,11 @@ def request_money():
     return jsonify({"request_link": req_link})
 
 
-@interac_api_controller_bp.route('/callbacks/transfer-completion', methods=["POST"])
-def notification():
-    print("i got transfer completion")
-    print(request.data)
-
-
-@interac_api_controller_bp.route('/callbacks/transfer-creation', methods=["POST"])
-def notification2():
-    print("i got transfer creation")
-    print(request.data)
-
-
 @interac_api_controller_bp.route('/notifications', methods=["POST"])
-def notification3():
+def notifications():
     print("i got notification")
-    # print(request.data)
-    return {}
+    print(request.data)
+    return jsonify({})
 
 # if __name__ == '__main__':
 #     app.run(port=8000)

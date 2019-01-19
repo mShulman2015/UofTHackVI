@@ -41,6 +41,7 @@ def _check_unfulfilled_requests():
             money_req = interac_api.get_money_request(reference_num)
 
             if money_req["status"] == 7 or money_req["status"] == 3:
+                print(money_req, "\n")
                 cur = conn.cursor()
                 cur.execute("UPDATE payment SET fufilled='t' WHERE reference_num='{}'".format(reference_num))
                 #TODO: unlock car

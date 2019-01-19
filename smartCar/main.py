@@ -3,6 +3,7 @@ from flask import Flask, redirect, request, jsonify
 from flask_cors import CORS
 
 import os
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -85,10 +86,12 @@ def exchange():
 def vehicle():
     global access_token
     global refresh_token
+    get_token()
     print(access_token)
     vehicle_ids = smartcar.get_vehicle_ids(access_token)['vehicles']
 
     #instantiate the first vehicle in the vehicle id list
+
     vehicle = smartcar.Vehicle(vehicle_ids[0], access_token)
 
     # TODO: Request Step 4: Make a request to Smartcar API
@@ -106,6 +109,40 @@ def vehicle():
 
     return jsonify(info)
 
+@app.route('/unlock', methods=['POST'])
+def unlock():
+    pass
+
+@app.route('/location', methods=['GET'])
+def location():
+    #1d3bb4b5-ddeb-492e-974b-43e5dfa68fdd
+    global access_token
+    global refresh_token
+    get_token()
+    print(access_token)
+    vehicle_ids = smartcar.get_vehicle_ids(access_token)['vehicles']
+    print(vehicle_ids)
+    #instantiate the first vehicle in the vehicle id list
+    #vehicle = smartcar.Vehicle(vehicle_ids[0], access_token)
+    data = []
+    for element in vehicle_ids:
+        vehicle = smartcar.Vehicle(element, access_token)
+        data.append([element, vehicle.location()])
+    # TODO: Request Step 4: Make a request to Smartcar API
+    # location = vehicle.location()
+    # print(location)
+    print(data)
+    '''
+    {
+        "id": "36ab27d0-fd9d-4455-823a-ce30af709ffc",
+        "make": "TESLA",
+        "model": "Model S",
+        "year": 2014
+    }
+    '''
+    print()
+
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(port=8000)

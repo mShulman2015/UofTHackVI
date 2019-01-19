@@ -17,7 +17,19 @@ def request_money():
 
 @app.route('/callbacks/transfer-completion', methods=["POST"])
 def notification():
-    print("i got called")
+    print("i got transfer completion")
+    print(request.data)
+
+
+@app.route('/callbacks/transfer-creation', methods=["POST"])
+def notification2():
+    print("i got transfer creation")
+    print(request.data)
+
+
+@app.route('/notifications', methods=["POST"])
+def notification2():
+    print("i got notification")
     print(request.data)
 
 

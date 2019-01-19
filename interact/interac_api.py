@@ -43,8 +43,6 @@ class Interac:
         return moneyRequests.getMoneyRequest(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, referenceNumber=reference_number)
         return data[0]
 
-    def get_unfulfilled_payment_requests(self):
-        return "a"
 
     def _encode_secret_key(self, keyAndSalt):
         h = hashlib.sha256()
@@ -59,6 +57,6 @@ class Interac:
 
         return "".join(chars)
 
-if __name__ == "__main__":
-    i = Interac()
-    print(i.get_money_request('CA1MRZxJR4Ze'))
+# if __name__ == "__main__":
+#     i = Interac()
+#     print(i.get_money_request('CA1MRVNvTbA3'))

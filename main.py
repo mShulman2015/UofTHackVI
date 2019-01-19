@@ -1,10 +1,8 @@
-import smartcar
 from flask import Flask, redirect, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 import psycopg2
 
-from interact.interac_api import Interac
 from interact.interac_api_controller import interac_api_controller_bp
 
 app = Flask(__name__,
@@ -17,9 +15,11 @@ app.register_blueprint(interac_api_controller_bp, url_prefix="/interac")
 conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")
 print("Opened database successfully")
 
+
 @app.route('/', methods=['GET'])
 def root():
     return app.send_static_file('index.html')
+
 
 @app.route('/submit_login', methods=['POST'])
 def login():

@@ -121,6 +121,7 @@ def location():
     get_token()
     print(access_token)
     vehicle_ids = smartcar.get_vehicle_ids(access_token)['vehicles']
+    print("The cars")
     print(vehicle_ids)
     #instantiate the first vehicle in the vehicle id list
     #vehicle = smartcar.Vehicle(vehicle_ids[0], access_token)

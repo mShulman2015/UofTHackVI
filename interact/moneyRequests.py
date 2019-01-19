@@ -231,7 +231,7 @@ invoiceNumber = 'string', dueDate = 'string', supressResponderNotifications = 's
   		},
 
   		"expiryDate": expiryDate,
-  		"supressResponderNotifications": False,
+  		"supressResponderNotifications": True,
   		"returnURL": "string",
   		"creationDate": fromDate,
   		"status": 0,

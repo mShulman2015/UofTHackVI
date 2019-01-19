@@ -47,13 +47,13 @@ def _check_unfulfilled_requests():
                 #TODO: unlock car
 
     # Set the next thread to happen
-    _check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
-    _check_completed_payments_thread.start()
+    check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
+    check_completed_payments_thread.start()
 
 
 def fetch_and_process_fulfilled_requests():
     global check_completed_payments_thread, unfulfilled_payment_requests
-    unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
+    # unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
     check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
     check_completed_payments_thread.start()
 

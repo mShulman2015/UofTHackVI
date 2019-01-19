@@ -193,7 +193,7 @@ def generateRandomString():
     return str(uuid.uuid4()).replace("-", "")
 
 
-def sendMoneyRequestOneTimeContact(accessToken, thirdPartyAccessid, requestId, deviceId,  apiRegistrationId, fromDate, expiryDate , applicationId='string',referenceNumber = 'string', sourceMoneyRequestId = 'string', requestFromContactName = 'string', language = 'en', notificationPrefHandle = 'string', notificationHandleType = 'string', active = 'string', amount = 'string', currency = 'string', editableFulfillAmount='false', requesterMessage = 'string',
+def sendMoneyRequestOneTimeContact(accessToken, thirdPartyAccessid, requestId, deviceId,  apiRegistrationId, fromDate, expiryDate , amount, applicationId='string',referenceNumber = 'string', sourceMoneyRequestId = 'string', requestFromContactName = 'string', language = 'en', notificationPrefHandle = 'string', notificationHandleType = 'string', active = 'string', currency = 'string', editableFulfillAmount='false', requesterMessage = 'string',
 invoiceNumber = 'string', dueDate = 'string', supressResponderNotifications = 'string', returnURL = 'string', creationDate = 'string', status = 'string', fulfillAmount = 'string', responderMessage = 'string', notificationStatus = 'string'):
 
     headerBody = {        
@@ -220,7 +220,7 @@ invoiceNumber = 'string', dueDate = 'string', supressResponderNotifications = 's
     		]
   		},
 
-  		"amount": 10,
+  		"amount": amount,
   		"currency": "CAD",
  		"editableFulfillAmount": False,
   		"requesterMessage": "string",
@@ -239,11 +239,8 @@ invoiceNumber = 'string', dueDate = 'string', supressResponderNotifications = 's
   		"notificationStatus": 0
     }
     response = requests.post(url2 + 'money-requests/send/', headers = headerBody, json = dataPassed)
-    print(response.status_code)
-    dataRec = response.json()
-    print('sendMoneyRequestOneTimeContact Data: ')
-    print(dataRec)
-    
+    return response.json()
+
 
 '''
  [putMoneyRequest updates a money request for an e-Transfer customer]

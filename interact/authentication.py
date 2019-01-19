@@ -6,18 +6,13 @@
 * @return string $access_token         [returned JSON is stored in $contactId and $contactHash]
 '''
 import requests
-import base64
-import random #for salt
-import string
-import json
-import hashlib
 
 url2 = 'https://gateway-web.beta.interac.ca/publicapi/api/v2/'
 
 def auth(salt, secretKeyString, thirdpartyaccessid):
-    print(secretKeyString)
+    # print(secretKeyString)
     headers = {
-        #'Content-Type': application/json,
+        'Content-Type': "application/json",
         'secretKey': secretKeyString,
         'salt': salt,
         'thirdpartyaccessid': thirdpartyaccessid      
@@ -36,6 +31,4 @@ def auth(salt, secretKeyString, thirdpartyaccessid):
             print('unexpected error')
     # Get the response data as a python object.  Verify that it's a dictionary.
     data = response.json()
-    print(type(data))
-    print(data)
-    return data.get('access_token') #return the access token 
+    return data.get('access_token') #return the access token

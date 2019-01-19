@@ -1,9 +1,9 @@
 import base64
 import random #for salt
+import hashlib
 import string
 import requests
 import json
-import hashlib
 
 import interact.authentication as authentication
 import interact.contacts as contacts
@@ -13,7 +13,7 @@ from time import gmtime, strftime
 
 url2 = 'https://gateway-web.beta.interac.ca/publicapi/api/v2/'
 
-def main():
+def demo():
     
     secretKey  = 'KeEEtwGqWdLl5io73TAVehyOQ9-3hO9kZGcxaR0Tq6o'
     salt = createSalt()
@@ -22,9 +22,9 @@ def main():
     requestId = 'requestID'
     deviceID = 'deviceID'
     apiRegistrationId = 'CA1ARj9rFprAhWDd'
-    email = 'nanylagon@beta.inter.ac'
-    name = 'Tester'
-    contactID = 'CAb6354mWzEW'    
+    email = 'nanylagon@gmail.com'
+    name = 'Tash-had Saqif'
+    contactID = 'CAb6354mWzEW'
     encodedKey = encodeSecretKey(keyAndSalt)
     toDate = '2019-01-20T16:12:12.000Z'
     randomID = '34674366743hsvgkjvgskvb'
@@ -40,13 +40,13 @@ def main():
     #contacts.putContact(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId, email, name, contactID)
     #contacts.deleteContact(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId, contactID)
     #contacts.getContactThroughContactID(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId, contactID)
-    
-    
+
+
     #money
-    
+
     #moneyRequests.getMoneyRequest(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId, fromDate, toDate)
     # moneyRequests.sendMoneyRequest(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId, fromDate, toDate)
-    moneyRequests.sendMoneyRequestOneTimeContact(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId, fromDate, toDate)
+    # moneyRequests.sendMoneyRequestOneTimeContact(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId, fromDate, toDate)
     #moneyRequests.cancelMoneyRequests(access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId)
     #moneyRequests.noticeMoneyRequest(referenceNumber, access_token, thirdPartyAccessid, requestId, deviceID, apiRegistrationId)
     #moneyRequests.putMoneyRequest(referenceNumber, access_token, thirdPartyAccessid, requestId, deviceID,  apiRegistrationId, fromDate, toDate)
@@ -63,5 +63,3 @@ def createSalt():
     
     return "".join(chars)
 
-if __name__ == '__main__':
-    main()

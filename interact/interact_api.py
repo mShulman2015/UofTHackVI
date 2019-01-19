@@ -45,7 +45,3 @@ def _create_salt():
         chars.append(random.choice(ALPHABET))
 
     return "".join(chars)
-
-if __name__ == "__main__":
-    req_link = send_money_request(50.4, "nanylagoon@gmail.com")
-    print(req_link)

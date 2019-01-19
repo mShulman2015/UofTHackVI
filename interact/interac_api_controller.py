@@ -8,7 +8,7 @@ import atexit
 interac_api_controller_bp = Blueprint("interac_api_controller", __name__)
 interac_api = Interac()
 
-POOL_TIME = 5 # Seconds
+POOL_TIME = 60 # Seconds
 
 # variables that are accessible from anywhere
 unfulfilled_payment_requests = {}

@@ -15,7 +15,7 @@ def request_money():
     return jsonify({"request_link": req_link})
 
 
-@app.route('/notifications', methods=["POST"])
+@app.route('/interac/notifications', methods=["POST"])
 def notification():
     print("i got called")
     print(request.data)

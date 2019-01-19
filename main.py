@@ -5,12 +5,17 @@ from flask_cors import CORS
 import psycopg2
 import os
 
+from interact.interac_api_controller import interac_api_controller_bp
+
+
 #from interact.interact_api import send_money_request
 
 app = Flask(__name__,
             static_url_path='',
             static_folder='static')
 CORS(app)
+app.register_blueprint(interac_api_controller_bp, url_prefix="/interac")
+
 
 conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")
 print("Opened database successfully")

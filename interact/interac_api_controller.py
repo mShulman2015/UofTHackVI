@@ -1,10 +1,11 @@
 #!flask/bin/python
-from flask import Flask, request, jsonify
+from flask import Blueprint, Flask, request, jsonify
 
-from interact.interact_api import Interac
+from interact.interac_api import Interac
 import threading
 import atexit
 
+interac_api_controller_bp = Blueprint("interac_api_controller", __name__)
 interac_api = Interac()
 
 POOL_TIME = 5 # Seconds
@@ -22,6 +23,7 @@ check_completed_payments_thread = threading.Thread()
 def _interrupt():
     global check_completed_payments_thread
     check_completed_payments_thread.cancel()
+
 
 def _check_unfulfilled_requests():
     global unfulfilled_payment_requests
@@ -47,7 +49,7 @@ atexit.register(_interrupt)
 app = Flask(__name__)
 
 
-@app.route('/interac/request-money', methods=["GET"])
+@interac_api_controller_bp.route('/request-money', methods=["GET"])
 def request_money():
     amount = request.args.get("amount")
     email = request.args.get("email")
@@ -56,28 +58,24 @@ def request_money():
     return jsonify({"request_link": req_link})
 
 
-@app.route('/callbacks/transfer-completion', methods=["POST"])
+@interac_api_controller_bp.route('/callbacks/transfer-completion', methods=["POST"])
 def notification():
     print("i got transfer completion")
     print(request.data)
 
 
-@app.route('/callbacks/transfer-creation', methods=["POST"])
+@interac_api_controller_bp.route('/callbacks/transfer-creation', methods=["POST"])
 def notification2():
     print("i got transfer creation")
     print(request.data)
 
 
-@app.route('/notifications', methods=["POST"])
+@interac_api_controller_bp.route('/notifications', methods=["POST"])
 def notification3():
     print("i got notification")
     print(request.data)
 
 
-
-
-
-
-if __name__ == '__main__':
-    app.run(port=8000)
-    # app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(port=8000)
+#     # app.run(debug=True)

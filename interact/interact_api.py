@@ -13,7 +13,7 @@ def send_money_request(amount, email):
     :param email: 
     :return str: url for the money request 
     """
-    secret_key  = 'KeEEtwGqWdLl5io73TAVehyOQ9-3hO9kZGcxaR0Tq6o'
+    secret_key  = 'ovxNE0bQNMBLxoR9vDXjQouB9z640q04LGYI5gVZtZM'
     salt = _create_salt()
     key_and_salt = salt + ':' + secret_key
     third_party_access_id = 'CA1TAFVkBhxeKE3x'

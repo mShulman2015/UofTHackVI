@@ -23,6 +23,18 @@ def _interrupt():
     global check_completed_payments_thread
     check_completed_payments_thread.cancel()
 
+def _check_unfulfilled_requests():
+    global unfulfilled_payment_requests
+    global check_completed_payments_thread
+    with data_lock:
+        unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
+        for i in unfulfilled_payment_requests:
+            print(i)
+
+    # Set the next thread to happen
+    _check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
+    _check_completed_payments_thread.start()
+
 
 def fetch_and_process_fulfilled_requests():
     global check_completed_payments_thread, unfulfilled_payment_requests
@@ -62,17 +74,6 @@ def notification3():
     print(request.data)
 
 
-def _check_unfulfilled_requests():
-    global unfulfilled_payment_requests
-    global check_completed_payments_thread
-    with data_lock:
-        unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
-        for i in unfulfilled_payment_requests:
-            print(i)
-
-    # Set the next thread to happen
-    _check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
-    _check_completed_payments_thread.start()
 
 
 

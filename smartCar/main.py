@@ -91,12 +91,15 @@ def vehicle():
     vehicle_ids = smartcar.get_vehicle_ids(access_token)['vehicles']
 
     #instantiate the first vehicle in the vehicle id list
-
-    vehicle = smartcar.Vehicle(vehicle_ids[0], access_token)
+    data = []
+    for element in vehicle_ids:
+        vehicle = smartcar.Vehicle(element, access_token)
+        info = vehicle.info()
+        data.append([element, info])
 
     # TODO: Request Step 4: Make a request to Smartcar API
     info = vehicle.info()
-    print(info)
+    print(data)
     '''
     {
         "id": "36ab27d0-fd9d-4455-823a-ce30af709ffc",
@@ -107,12 +110,30 @@ def vehicle():
     '''
     print()
 
-    return jsonify(info)
+    return jsonify(data)
 
 @app.route('/unlock', methods=['POST'])
 def unlock():
-    pass
-
+    global access_token
+    global refresh_token
+    get_token()
+    print(request.args.get('id'))
+    vehicle = smartcar.Vehicle(request.args.get('id'), access_token)
+    k = vehicle.lock()
+    if (k==None):
+        return '',200
+    return 'Cannot Unlock', 400
+@app.route('/lock', methods=['POST'])
+def lock():
+    global access_token
+    global refresh_token
+    get_token()
+    print(request.args.get('id'))
+    vehicle = smartcar.Vehicle(request.args.get('id'), access_token)
+    k = vehicle.lock()
+    if (k==None):
+        return '',200
+    return "Cannot Lock",400
 @app.route('/location', methods=['GET'])
 def location():
     #1d3bb4b5-ddeb-492e-974b-43e5dfa68fdd

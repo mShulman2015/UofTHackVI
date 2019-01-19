@@ -76,8 +76,8 @@ def notification2():
 @interac_api_controller_bp.route('/notifications', methods=["POST"])
 def notification3():
     print("i got notification")
-    print(request.data)
-
+    # print(request.data)
+    return {}
 
 # if __name__ == '__main__':
 #     app.run(port=8000)

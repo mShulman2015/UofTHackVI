@@ -5,6 +5,7 @@ from flask_cors import CORS
 import psycopg2
 import os
 
+from interact.interac_api import Interac
 from interact.interac_api_controller import interac_api_controller_bp
 
 
@@ -14,7 +15,8 @@ app = Flask(__name__,
             static_url_path='',
             static_folder='static')
 CORS(app)
-app.register_blueprint(interac_api_controller_bp, url_prefix="/interac")
+interac_api = Interac()
+# app.register_blueprint(interac_api_controller_bp, url_prefix="/interac")
 
 
 conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")
@@ -59,6 +61,14 @@ def get_cars():
 def select_car(cid):
     # TODO: add call to make interac payment
     return "Thank your for percahsing a car, pease accept the payment request, and the car will be opened for you"
+
+@app.route('interac/request-money', methods=["GET"])
+def request_money():
+    amount = request.args.get("amount")
+    email = request.args.get("email")
+
+    req_link = interac_api.send_money_request(amount, email)
+    return jsonify({"request_link": req_link})
 
 if __name__ == '__main__':
     app.run(port=8000)

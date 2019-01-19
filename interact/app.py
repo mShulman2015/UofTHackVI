@@ -2,9 +2,37 @@
 from flask import Flask, request, jsonify
 
 from interact.interact_api import Interac
+import threading
+import atexit
 
-app = Flask(__name__)
 interac_api = Interac()
+
+POOL_TIME = 5 # Seconds
+
+# variables that are accessible from anywhere
+unfulfilled_payment_requests = {}
+
+# lock to control access to variable
+data_lock = threading.Lock()
+
+# thread handler
+check_completed_payments_thread = threading.Thread()
+
+
+def _interrupt():
+    global check_completed_payments_thread
+    check_completed_payments_thread.cancel()
+
+
+def fetch_and_process_fulfilled_requests():
+    global check_completed_payments_thread, unfulfilled_payment_requests
+    unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
+    check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
+    check_completed_payments_thread.start()
+
+fetch_and_process_fulfilled_requests()
+atexit.register(_interrupt)
+app = Flask(__name__)
 
 
 @app.route('/interac/request-money', methods=["GET"])
@@ -32,6 +60,20 @@ def notification2():
 def notification3():
     print("i got notification")
     print(request.data)
+
+
+def _check_unfulfilled_requests():
+    global unfulfilled_payment_requests
+    global check_completed_payments_thread
+    with data_lock:
+        unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
+        for i in unfulfilled_payment_requests:
+            print(i)
+
+    # Set the next thread to happen
+    _check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())
+    _check_completed_payments_thread.start()
+
 
 
 

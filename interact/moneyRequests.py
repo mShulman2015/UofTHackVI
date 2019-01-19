@@ -478,7 +478,7 @@ def getMoneyRequest(access_token, thirdPartyAccessId, requestId, deviceId, apiRe
         else:
             params += ('&applicationId=' + applicationId)
             
-    print(params)
+    # print(params)
     
     headerBody = {        
         'accessToken': 'Bearer ' + access_token,
@@ -490,8 +490,8 @@ def getMoneyRequest(access_token, thirdPartyAccessId, requestId, deviceId, apiRe
 
     #response = requests.get(url2 + 'money-requests'+'/send' + str(params), headers = headers)
     response = requests.get(url2+'money-requests'+'/send' + params, headers = headerBody)
-    print('retrieved money requests: ')
-    print(response.status_code)
-    print(response.text)
+    # print('retrieved money requests: ')
+    # print(response.status_code)
+    # print(response.text)
     
-    return (response.text)
+    return response.json()

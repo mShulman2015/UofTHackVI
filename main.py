@@ -62,7 +62,7 @@ def select_car(cid):
     # TODO: add call to make interac payment
     return "Thank your for percahsing a car, pease accept the payment request, and the car will be opened for you"
 
-@app.route('interac/request-money', methods=["GET"])
+@app.route('/interac/request-money', methods=["GET"])
 def request_money():
     amount = request.args.get("amount")
     email = request.args.get("email")

@@ -29,9 +29,12 @@ def _check_unfulfilled_requests():
     global unfulfilled_payment_requests
     global check_completed_payments_thread
     with data_lock:
-        unfulfilled_payment_requests = interac_api.get_unfulfilled_payment_requests()
-        for i in unfulfilled_payment_requests:
-            print(i)
+        print("data_lock")
+        # cur = conn.cursor()
+        # cur.execute("SELECT reference_num from payment where fufilled='f'")
+        # rows = cur.fetchall()
+        # for row in rows:
+        #     print(row[0])
 
     # Set the next thread to happen
     _check_completed_payments_thread = threading.Timer(POOL_TIME, _check_unfulfilled_requests, ())

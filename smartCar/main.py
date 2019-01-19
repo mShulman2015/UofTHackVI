@@ -9,6 +9,10 @@ CORS(app)
 
 # global variable to save our access_token
 access = None
+refresh_token = 'c55e72c9-dd1a-4480-b237-7e9b5fc902ed'
+access_token = '141fde8b-83a3-428e-91c5-9a70a308be06'
+
+#exchange code 420417d3-e4e6-4b4d-96db-b17be8f4b405
 
 # TODO: Authorization Step 1a: Launch Smartcar authorization dialog
 client = smartcar.AuthClient(
@@ -18,6 +22,12 @@ client = smartcar.AuthClient(
     scope=['read_vehicle_info','read_location', 'control_security', 'control_security:unlock', 'control_security:lock'],
     test_mode=True,
 )
+@app.route('/token', methods=['POST'])
+def token():
+    print(refresh_token)
+    code = client.exchange_refresh_token(refresh_token)
+    print(code)
+    return jsonify(code)
 
 @app.route('/login', methods=['GET'])
 def login():
@@ -28,6 +38,7 @@ def login():
 @app.route('/exchange', methods=['GET'])
 def exchange():
     code = request.args.get('code')
+    #code="efc907c2-11ba-49fa-a236-294282e3b429"
     print(code)
 
     # TODO: Request Step 1: Obtain an access token
@@ -37,6 +48,10 @@ def exchange():
     # persistent storage
     access = client.exchange_code(code)
     print(access)
+    access_token = access['access_token']
+    refresh_token = access['refresh_token']
+    print(access_token)
+    print(refresh_token)
     return '', 200
 
 

@@ -16,7 +16,7 @@ client = smartcar.AuthClient(
     client_secret=os.environ.get('CLIENT_SECRET'),
     redirect_uri=os.environ.get('REDIRECT_URI'),
     scope=['read_vehicle_info','read_location', 'control_security', 'control_security:unlock', 'control_security:lock'],
-    test_mode=False,
+    test_mode=True,
 )
 
 @app.route('/login', methods=['GET'])

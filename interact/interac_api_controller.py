@@ -10,7 +10,7 @@ conn = psycopg2.connect(database = "instacar", user = "instacar", password="inst
 interac_api_controller_bp = Blueprint("interac_api_controller", __name__)
 interac_api = Interac()
 
-POOL_TIME = 60 # Seconds
+POOL_TIME = 30 # Seconds
 
 # variables that are accessible from anywhere
 unfulfilled_payment_requests = {}
@@ -71,23 +71,23 @@ def request_money():
     return jsonify({"request_link": req_link})
 
 
-# @interac_api_controller_bp.route('/callbacks/transfer-completion', methods=["POST"])
-# def notification():
-#     print("i got transfer completion")
-#     print(request.data)
-#
-#
-# @interac_api_controller_bp.route('/callbacks/transfer-creation', methods=["POST"])
-# def notification2():
-#     print("i got transfer creation")
-#     print(request.data)
-#
-#
-# @interac_api_controller_bp.route('/notifications', methods=["POST"])
-# def notification3():
-#     print("i got notification")
-#     # print(request.data)
-#     return {}
+@interac_api_controller_bp.route('/callbacks/transfer-completion', methods=["POST"])
+def notification():
+    print("i got transfer completion")
+    print(request.data)
+
+
+@interac_api_controller_bp.route('/callbacks/transfer-creation', methods=["POST"])
+def notification2():
+    print("i got transfer creation")
+    print(request.data)
+
+
+@interac_api_controller_bp.route('/notifications', methods=["POST"])
+def notification3():
+    print("i got notification")
+    # print(request.data)
+    return {}
 
 # if __name__ == '__main__':
 #     app.run(port=8000)

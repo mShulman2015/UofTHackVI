@@ -17,6 +17,7 @@ def request_money():
 
 @app.route('/notifications', methods=["POST"])
 def notification():
+    print("i got called")
     print(request.data)
 
 

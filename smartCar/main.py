@@ -13,7 +13,7 @@ access = None
 # TODO: Authorization Step 1a: Launch Smartcar authorization dialog
 client = smartcar.AuthClient(
     client_id="ddfe836a-9f54-4fb2-8d16-9d70059b9dcd",
-    client_secret="cf64fb48-449a-4141-b488-90ebf31df622",
+    client_secret="431cb198-322d-4f4c-a38c-2a2a37d9b19f",
     redirect_uri="http://localhost:8000/exchange",
     scope=['read_vehicle_info','read_location', 'control_security', 'control_security:unlock', 'control_security:lock'],
     test_mode=True,

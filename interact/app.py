@@ -5,6 +5,7 @@ from interact.interact_api import send_money_request
 
 app = Flask(__name__)
 
+
 @app.route('/interac/request-money', methods=["GET"])
 def request_money():
     amount = request.args.get("amount")
@@ -12,6 +13,12 @@ def request_money():
 
     req_link = send_money_request(amount, email)
     return jsonify({"request_link": req_link})
+
+
+@app.route('/notifications', methods=["POST"])
+def notification():
+    print(request.data)
+
 
 if __name__ == '__main__':
     app.run(port=8000)

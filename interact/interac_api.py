@@ -24,7 +24,7 @@ class Interac:
         :return str: url for the money request 
         """
 
-        request_id = 'requestID'
+        request_id = str(uuid.uuid4())
         name = 'Tash-had Saqif'
         contact_id = 'CAb6354mWzEW'
         from_date = '2018-08-20T16:12:12.000Z'
@@ -38,9 +38,9 @@ class Interac:
         return {}
 
     def get_money_request(self, reference_number=None):
-        request_id = 'requestID'
+        request_id = str(uuid.uuid4())
 
-        data = moneyRequests.getMoneyRequest(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, referenceNumber=reference_number)
+        return moneyRequests.getMoneyRequest(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, referenceNumber=reference_number)
         return data[0]
 
     def get_unfulfilled_payment_requests(self):
@@ -61,4 +61,4 @@ class Interac:
 
 if __name__ == "__main__":
     i = Interac()
-    i.get_money_request('CA1MRSQubUV2')
+    print(i.get_money_request('CA1MRZxJR4Ze'))

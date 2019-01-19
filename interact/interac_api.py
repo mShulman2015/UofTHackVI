@@ -32,7 +32,9 @@ class Interac:
         random_id = '34674366743hsvgkjvgskvb'
 
         response = moneyRequests.sendMoneyRequestOneTimeContact(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, from_date, to_date, amount)
-        return response["paymentGatewayUrl"]
+        if "paymentGatewayUrl" in response:
+            return response["paymentGatewayUrl"]
+        return {}
 
     def get_money_request(self, reference_number=None):
         request_id = 'requestID'

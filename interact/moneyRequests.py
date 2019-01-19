@@ -196,13 +196,14 @@ def generateRandomString():
 def sendMoneyRequestOneTimeContact(accessToken, thirdPartyAccessid, requestId, deviceId,  apiRegistrationId, fromDate, expiryDate , amount, applicationId='string',referenceNumber = 'string', sourceMoneyRequestId = 'string', requestFromContactName = 'string', language = 'en', notificationPrefHandle = 'string', notificationHandleType = 'string', active = 'string', currency = 'string', editableFulfillAmount='false', requesterMessage = 'string',
 invoiceNumber = 'string', dueDate = 'string', supressResponderNotifications = 'string', returnURL = 'string', creationDate = 'string', status = 'string', fulfillAmount = 'string', responderMessage = 'string', notificationStatus = 'string'):
 
-    headerBody = {        
+    headerBody = {
+        'Accept': 'application/json',
         'accessToken': 'Bearer ' + accessToken,
         'thirdPartyAccessId': thirdPartyAccessid,
         'requestId': generateRandomString(),
         'deviceId': deviceId,
-        'apiRegistrationId': apiRegistrationId
-
+        'apiRegistrationId': apiRegistrationId,
+        'Content-Type': 'application/json'
         }
 
     dataPassed = {

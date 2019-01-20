@@ -124,10 +124,11 @@ def vehicle():
     print()
     query = info["make"] + " " + info["model"]
     pic_url = get_pic(query)
-    print("VEHICLE_DATA", data)
-    d = jsonify(data)
-    d["picture"] = pic_url
-    return d
+    d = {
+        "data": data,
+        "picture": pic_url
+    }
+    return jsonify(d)
 
 
 @smartcar_api_controller_bp.route('/unlock', methods=['POST'])

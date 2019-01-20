@@ -14,7 +14,7 @@ import CarRegistration from './carRegistration/carRegistration'
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
-        
+
         <div>
         <CarRegistration/>
         <Route exact path="/" component={FindCar} />

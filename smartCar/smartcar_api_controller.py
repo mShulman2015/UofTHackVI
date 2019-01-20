@@ -15,7 +15,7 @@ refresh_token = None
 client = smartcar.AuthClient(
     client_id="ddfe836a-9f54-4fb2-8d16-9d70059b9dcd",
     client_secret="431cb198-322d-4f4c-a38c-2a2a37d9b19f",
-    redirect_uri="http://localhost:8000/exchange",
+    redirect_uri="https://www.mdshulman.com/smartcar/exchange",
     scope=['read_vehicle_info','read_location', 'control_security', 'control_security:unlock', 'control_security:lock'],
     test_mode=True,
 )

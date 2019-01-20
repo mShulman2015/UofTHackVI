@@ -18,7 +18,7 @@ client = smartcar.AuthClient(
     client_secret="431cb198-322d-4f4c-a38c-2a2a37d9b19f",
     redirect_uri="http://localhost:8000/exchange",
     scope=['read_vehicle_info','read_location', 'control_security', 'control_security:unlock', 'control_security:lock'],
-    test_mode=True,
+    test_mode=False,
 )
 
 def get_token():
@@ -119,7 +119,7 @@ def unlock():
     get_token()
     print(request.args.get('id'))
     vehicle = smartcar.Vehicle(request.args.get('id'), access_token)
-    k = vehicle.lock()
+    k = vehicle.unlock()
     if (k==None):
         return '',200
     return 'Cannot Unlock', 400

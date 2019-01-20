@@ -11,7 +11,7 @@ app = Flask(__name__,
             static_folder='static')
 CORS(app)
 app.register_blueprint(interac_api_controller_bp, url_prefix="/interac")
-app.register_blueprint(smartcar_api_controller_bp)
+app.register_blueprint(smartcar_api_controller_bp, url_prefix="/smartcar")
 
 
 conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")

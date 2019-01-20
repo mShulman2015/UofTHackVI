@@ -122,8 +122,8 @@ def vehicle():
     }
     '''
     print()
-    query = info["make"] + " " + "model s" # [model] ???
-    print("QUERY: ", query)
+    query = info["make"].lowercase() + " " + "model s" # [model] - this is the real car. the model is hardcoded bc the simulated cars in test keys are different than the one at the hackathon ???
+    print("QUERY:", query)
     pic_url = get_pic(query)
     d = {
         "data": data,
@@ -192,6 +192,6 @@ def location():
     print()
 
     return jsonify(data)
-#
+
 # if __name__ == '__main__':
 #     print(get_pic("tesla model s"))

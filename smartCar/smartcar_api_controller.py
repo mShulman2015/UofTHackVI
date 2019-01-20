@@ -4,9 +4,6 @@ from flask_cors import CORS
 
 smartcar_api_controller_bp = Blueprint("smartcar_api_controller", __name__)
 
-app = Flask(__name__)
-CORS(app)
-
 # global variable to save our access_token
 access = None
 access_token = None
@@ -172,5 +169,5 @@ def location():
 
     return jsonify(data)
 
-if __name__ == '__main__':
-    app.run(port=8000)
+# if __name__ == '__main__':
+#     app.run(port=8000)

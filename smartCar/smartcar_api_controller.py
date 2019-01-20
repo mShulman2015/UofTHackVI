@@ -14,7 +14,7 @@ client = smartcar.AuthClient(
     client_secret="431cb198-322d-4f4c-a38c-2a2a37d9b19f",
     redirect_uri="https://www.mdshulman.com/smartcar/exchange",
     scope=['read_vehicle_info','read_location', 'control_security', 'control_security:unlock', 'control_security:lock'],
-    test_mode=True,
+    test_mode=False,
 )
 
 def get_token():

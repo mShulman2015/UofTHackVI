@@ -1,5 +1,5 @@
 #!flask/bin/python
-import psycopg2
+# import psycopg2
 from flask import Blueprint, Flask, request, jsonify, json, abort
 from interact.interac_api import Interac
 # import threading
@@ -60,7 +60,7 @@ interac_api = Interac()
 # fetch_and_process_fulfilled_requests()
 # atexit.register(_interrupt)
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 
 @interac_api_controller_bp.route('/request-money', methods=["GET"])
@@ -74,5 +74,6 @@ def request_money():
 
 @interac_api_controller_bp.route('/notifications', methods=["POST"])
 def notifications():
+    print("Received Notification")
     interac_api.process_payment_notification(json.dumps(request.json))
     abort(200)

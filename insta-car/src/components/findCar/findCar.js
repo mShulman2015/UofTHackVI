@@ -116,9 +116,6 @@ class FindCar extends React.Component {
     }
 
     displayVehicles() {
-        console.log(
-            "holy fuck"
-        );
         console.log(this.state.positions);
         return (
             <Marker name={this.state.markerInfo} position={this.state.positions[0]} onClick={this.onMarkerClick} />
@@ -128,7 +125,7 @@ class FindCar extends React.Component {
     paidButton(){
         if (this.state.paidMoney){
             return(
-                <div>
+                <div className="stuff_align">
                     <Button variant="contained" color="primary" onClick={this.unlockCar}>
                         Lock
                     </Button>
@@ -141,13 +138,15 @@ class FindCar extends React.Component {
         }
         if (this.state.paid){
             return(
-                <Button variant="contained" color="primary" onClick={this.checkIfPaymentComplete}>
-                    I Paid!
-                </Button>
+                <div className="stuff_align">
+                    <Button variant="contained" color="primary" onClick={this.checkIfPaymentComplete}>
+                        I Paid!
+                    </Button>
+                </div>
             )
         }else{
             return(
-                <div>
+                <div className="stuff_align">
                      <TextField
                         id="outlined-email-input"
                         label="Email ..."

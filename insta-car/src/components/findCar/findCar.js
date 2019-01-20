@@ -148,7 +148,7 @@ class FindCar extends React.Component {
         }else{
             return(
                 <div className="stuff_align">
-                    <img src={this.state.vehicle_picture} width="350" height="200" className="imgStyle"></img>
+                    <img src={this.state.vehicle_picture} width="330" height="200" className="imgStyle"></img>
                      <TextField
                         id="outlined-email-input"
                         label="Email ..."

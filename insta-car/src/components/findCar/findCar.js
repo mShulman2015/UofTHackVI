@@ -42,7 +42,7 @@ class FindCar extends React.Component{
         const sideList = (
           <div>
             <List>
-              {["asdf"].map((text, index) => (
+              {[this.state.markerInfo].map((text, index) => (
                 <ListItem key={text}>
                   <ListItemText primary={text} />
                 </ListItem>
@@ -140,8 +140,9 @@ class FindCar extends React.Component{
 
 
   onMarkerClick = (props, marker, e) =>{
-      this.toggleDrawer('right', true)
+      //this.toggleDrawer('right', true)
     this.setState({
+        right:true,
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true

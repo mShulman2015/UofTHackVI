@@ -48,7 +48,7 @@ class FindCar extends React.Component {
             markerInfo: "",
             right: false,
             email:"",
-            paid: false, 
+            paid: false,
             referenceNumber: "",
             paidMoney: false,
             vehicle_picture: ""
@@ -86,7 +86,7 @@ class FindCar extends React.Component {
                         style={drawerStyle}>
                         {sideList}
                     </div>
-                    
+
 
                     {this.paidButton()}
                 </Drawer>
@@ -127,11 +127,11 @@ class FindCar extends React.Component {
         if (this.state.paidMoney){
             return(
                 <div className="stuff_align">
-                    <Button variant="contained" color="primary" onClick={this.unlockCar}>
+                    <Button variant="contained" color="primary" onClick={this.unlockCar} className="buttonStyle">
                         Lock
                     </Button>
 
-                    <Button variant="contained" color="primary" onClick={this.lockCar}>
+                    <Button variant="contained" color="primary" onClick={this.lockCar} className="buttonStyle">
                         Unlock
                     </Button>
                 </div>
@@ -140,7 +140,7 @@ class FindCar extends React.Component {
         if (this.state.paid){
             return(
                 <div className="stuff_align">
-                    <Button variant="contained" color="primary" onClick={this.checkIfPaymentComplete}>
+                    <Button variant="contained" color="primary" onClick={this.checkIfPaymentComplete} className="buttonStyle">
                         I Paid!
                     </Button>
                 </div>
@@ -162,7 +162,7 @@ class FindCar extends React.Component {
                         onChange={(event)=>{this.setState({email:event.target.value})}}
                     />
                     <Fab variant="extended" color="primary" aria-label="Add" style={btnStyle} onClick={this.sendPaymentRequest}><NavigationIcon />
-                        Request 
+                        Request
                     </Fab>
                 </div>
             )

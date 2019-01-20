@@ -121,7 +121,6 @@ def unlock_vehicle(vehicle_id):
     global access_token
     global refresh_token
     get_token()
-
     vehicle = smartcar.Vehicle(vehicle_id, access_token)
     k = vehicle.unlock()
     if (k == None):

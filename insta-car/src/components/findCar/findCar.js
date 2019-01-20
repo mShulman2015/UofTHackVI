@@ -10,7 +10,12 @@ class FindCar extends React.Component{
         super(props);
         this.state={
             vehicles:[],
-            positions:[]
+            positions:[],
+            vehicle_info:[],
+            showingInfoWindow: false,
+            activeMarker: {},
+            selectedPlace: {},
+            markerInfo:""
         }
     }
 
@@ -29,6 +34,14 @@ class FindCar extends React.Component{
 
             {this.displayVehicles()}
 
+            <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}>
+            <div>
+              <h1>{this.state.selectedPlace.name}</h1>
+            </div>
+        </InfoWindow>
+
             </Map>
             </div>
         )
@@ -40,8 +53,20 @@ class FindCar extends React.Component{
         );
         console.log(this.state.positions);
         return(
-            <Marker position={this.state.positions[0]}/>
+            <Marker name={this.state.markerInfo} position={this.state.positions[0]} onClick={this.onMarkerClick}/>
         )
+    }
+
+    generateInfo(){
+        console.log(this.state.vehicle_info[0]);
+        let name = ""
+        //console.log(this.state.vehicle_info[0][1]);
+        if (this.state.vehicle_info[0]!==undefined){
+            name = this.state.vehicle_info[0][1].year + " " + this.state.vehicle_info[0][1].make + " " + this.state.vehicle_info[0][1].model
+        }
+        this.setState({markerInfo:name})
+        //console.log(name)
+
     }
 
     componentDidMount(){
@@ -72,6 +97,21 @@ class FindCar extends React.Component{
         fetch(url).then(res=>res.json()).then(res=>{
             this.setState({vehicles:res}, this.sortData)
         })
+
+        let url2="http://localhost:8000/vehicle"
+        fetch(url2).then(res=>res.json()).then(res=>{
+            this.setState({vehicle_info:res}, this.generateInfo)
+        })
+    }
+
+
+  onMarkerClick = (props, marker, e) =>{
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+    console.log("shit")
     }
 }
 

@@ -4,12 +4,14 @@ from flask_cors import CORS
 import psycopg2
 
 from interact.interac_api_controller import interac_api_controller_bp
+from smartCar.smartcar_api_controller import smartcar_api_controller_bp
 
 app = Flask(__name__,
             static_url_path='',
             static_folder='static')
 CORS(app)
 app.register_blueprint(interac_api_controller_bp, url_prefix="/interac")
+app.register_blueprint(smartcar_api_controller_bp)
 
 
 conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")
@@ -36,6 +38,7 @@ def login():
         return redirect('/')
     return redirect('/select_car.html')
 
+
 @app.route('/api/select_car', methods=['GET'])
 def get_cars():
     cur = conn.cursor()
@@ -55,7 +58,7 @@ def get_cars():
 @app.route('/select/<int:cid>', methods=["GET"])
 def select_car(cid):
     # TODO: add call to make interac payment
-    return "Thank your for percahsing a car, pease accept the payment request, and the car will be opened for you"
+    return "Thank your for purchasing a car, please accept the payment request, and the car will be opened for you"
 
 if __name__ == '__main__':
     app.run(port=8000)

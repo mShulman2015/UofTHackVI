@@ -1,9 +1,8 @@
 import smartcar
-from flask import Flask, redirect, request, jsonify
+from flask import Flask, redirect, request, jsonify, Blueprint
 from flask_cors import CORS
 
-import os
-import json
+smartcar_api_controller_bp = Blueprint("smartcar_api_controller", __name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -45,7 +44,7 @@ def set_tokens(access, refresh):
 
 get_token()
 
-@app.route('/token', methods=['POST'])
+@smartcar_api_controller_bp.route('/token', methods=['POST'])
 def token():
     get_token()
     print(refresh_token)
@@ -55,13 +54,13 @@ def token():
     set_tokens(code['access_token'], code['refresh_token'])
     return jsonify(code)
 
-@app.route('/login', methods=['GET'])
+@smartcar_api_controller_bp.route('/login', methods=['GET'])
 def login():
     # TODO: Authorization Step 1b: Launch Smartcar authentication dialog
     auth_url = client.get_auth_url()
     return redirect(auth_url)
 
-@app.route('/exchange', methods=['GET'])
+@smartcar_api_controller_bp.route('/exchange', methods=['GET'])
 def exchange():
     code = request.args.get('code')
     #code="efc907c2-11ba-49fa-a236-294282e3b429"
@@ -82,7 +81,7 @@ def exchange():
     print(refresh_token)
     return '', 200
 
-@app.route('/vehicle', methods=['GET'])
+@smartcar_api_controller_bp.route('/vehicle', methods=['GET'])
 def vehicle():
     global access_token
     global refresh_token
@@ -112,18 +111,25 @@ def vehicle():
 
     return jsonify(data)
 
-@app.route('/unlock', methods=['POST'])
-def unlock():
+@smartcar_api_controller_bp.route('/unlock', methods=['POST'])
+def unlock_request():
+    print(request.args.get('id'))
+    unlock_vehicle(request.args.get('id'))
+
+
+def unlock_vehicle(vehicle_id):
     global access_token
     global refresh_token
     get_token()
-    print(request.args.get('id'))
-    vehicle = smartcar.Vehicle(request.args.get('id'), access_token)
-    k = vehicle.lock()
-    if (k==None):
-        return '',200
+
+    vehicle = smartcar.Vehicle(vehicle_id, access_token)
+    k = vehicle.unlock()
+    if (k == None):
+        return '', 200
     return 'Cannot Unlock', 400
-@app.route('/lock', methods=['POST'])
+
+
+@smartcar_api_controller_bp.route('/lock', methods=['POST'])
 def lock():
     global access_token
     global refresh_token
@@ -134,7 +140,8 @@ def lock():
     if (k==None):
         return '',200
     return "Cannot Lock",400
-@app.route('/location', methods=['GET'])
+
+@smartcar_api_controller_bp.route('/location', methods=['GET'])
 def location():
     #1d3bb4b5-ddeb-492e-974b-43e5dfa68fdd
     global access_token

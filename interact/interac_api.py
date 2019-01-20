@@ -25,11 +25,11 @@ class Interac:
         """
 
         request_id = str(uuid.uuid4())
-        name = 'Tash-had Saqif'
-        contact_id = 'CAb6354mWzEW'
+        # name = 'Tash-had Saqif'
+        # contact_id = 'CAb6354mWzEW'
         from_date = '2018-08-20T16:12:12.000Z'
         to_date = '2019-01-20T16:12:12.000Z'
-        random_id = '34674366743hsvgkjvgskvb'
+        # random_id = '34674366743hsvgkjvgskvb'
 
         response = moneyRequests.sendMoneyRequestOneTimeContact(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, from_date, to_date, amount)
         print("Payment request response:", response)
@@ -45,7 +45,11 @@ class Interac:
     def process_payment_notification(self, payment_data):
         for update in payment_data["moneyRequestUpdates"]:
             if update["state"] == "REQUEST_FULFILLED":
-                return update["sourceMoneyRequestId"]
+                from smartCar.smartcar_api_controller import unlock_vehicle
+                unlock_vehicle(self.get_vehicle_id_with_payment_request_id(update["sourceMoneyRequestId"]))
+
+    def get_vehicle_id_with_payment_request_id(self, payment_request_id):
+        pass
 
     def _encode_secret_key(self, keyAndSalt):
         h = hashlib.sha256()
@@ -59,6 +63,7 @@ class Interac:
             chars.append(random.choice(ALPHABET))
 
         return "".join(chars)
+
 
 # if __name__ == "__main__":
 #     i = Interac()

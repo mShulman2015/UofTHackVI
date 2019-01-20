@@ -54,7 +54,7 @@ def get_pic(query):
     response.raise_for_status()
     search_results = response.json()
     thumbnail_urls = [img["thumbnailUrl"] for img in search_results["value"][:16]]
-    return thumbnail_urls[0]
+    return thumbnail_urls[1]
 
 get_token()
 
@@ -122,7 +122,7 @@ def vehicle():
     }
     '''
     print()
-    query = info["make"] + " " + info["model"] + " " + str(info["year"])
+    query = info["make"] + " " + info["model"]
     print("QUERY: ", query)
     pic_url = get_pic(query)
     d = {
@@ -192,6 +192,6 @@ def location():
     print()
 
     return jsonify(data)
-
+#
 # if __name__ == '__main__':
-#     app.run(port=8000)
+#     print(get_pic("tesla model s"))

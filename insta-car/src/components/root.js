@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 
 import FindCar from './findCar/findCar';
 import InstaCarNavbar from './instacarNavbar/instacarNavbar';
+import MyCar from './myCar/myCar'
 //import CarRegistration from './carRegistration/carRegistration'
 
 // Just add your component onto a path below
@@ -19,6 +20,7 @@ const Root = ({ store }) => (
         <div>
         <InstaCarNavbar/>
         <Route exact path="/" component={FindCar} />
+        <Route exact path="/cars/:car_id" component={MyCar}/>
         </div>
     </Router>
   </Provider>

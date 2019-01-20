@@ -147,8 +147,6 @@ class FindCar extends React.Component{
       activeMarker: marker,
       showingInfoWindow: true
     });
-    //console.log("shit")
-
     }
 }
 

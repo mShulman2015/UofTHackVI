@@ -48,6 +48,8 @@ class FindCar extends React.Component {
             markerInfo: "",
             right: false,
             email:"",
+            paid: false, 
+            referenceNumber: ""
         }
     }
 
@@ -82,21 +84,9 @@ class FindCar extends React.Component {
                         style={drawerStyle}>
                         {sideList}
                     </div>
-                    <TextField
-                        id="outlined-email-input"
-                        label="Email ..."
-                        type="email"
-                        name="email"
-                        autoComplete="email"
-                        margin="normal"
-                        variant="outlined"
-                        style={inputStyle}
-                        value={this.state.email}
-                        onChange={(event)=>{this.setState({email:event.target.value})}}
-                    />
-                    <Fab variant="extended" color="primary" aria-label="Add" style={btnStyle} onClick={this.sendPaymentRequest}><NavigationIcon />
-                        Request 
-        </Fab>
+                    
+
+                    {this.paidButton()}
                 </Drawer>
                 <Map google={this.props.google} zoom={16}
                     initialCenter={{ lat: 43.659466, lng: -79.396923 }}>
@@ -132,6 +122,36 @@ class FindCar extends React.Component {
         return (
             <Marker name={this.state.markerInfo} position={this.state.positions[0]} onClick={this.onMarkerClick} />
         )
+    }
+
+    paidButton(){
+        if (this.state.paid){
+            return(
+                <Button variant="contained" color="primary" onClick={this.checkIfPaymentComplete}>
+                    I Paid!
+                </Button>
+            )
+        }else{
+            return(
+                <div>
+                     <TextField
+                        id="outlined-email-input"
+                        label="Email ..."
+                        type="email"
+                        name="email"
+                        autoComplete="email"
+                        margin="normal"
+                        variant="outlined"
+                        style={inputStyle}
+                        value={this.state.email}
+                        onChange={(event)=>{this.setState({email:event.target.value})}}
+                    />
+                    <Fab variant="extended" color="primary" aria-label="Add" style={btnStyle} onClick={this.sendPaymentRequest}><NavigationIcon />
+                        Request 
+                    </Fab>
+                </div>
+            )
+        }
     }
 
     generateInfo() {
@@ -175,10 +195,25 @@ class FindCar extends React.Component {
     }
 
     sendPaymentRequest = ()=> {
+        this.setState({paid:true})
         let url = "https://www.mdshulman.com/interac/request-money?amount=68.2&email=" + this.state.email;
         console.log(url)
         fetch(url).then(res => res.json()).then(res => {
-            console.log(res)
+            if (res) {
+                console.log(res);
+                var ref_num = res["request_link"].split("/").pop();
+                console.log(ref_num)
+                this.setState({referenceNumber: ref_num});
+            }
+        })
+    }
+
+    checkIfPaymentComplete = ()=> {
+        let url = "https://www.mdshulman.com/interac/payment-complete?reference_num=" + this.state.referenceNumber;
+        console.log(url)
+        console.log("Checking")
+        fetch(url).then(res => res.json()).then(res => {
+            console.log(res);
         })
     }
 

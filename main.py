@@ -9,7 +9,9 @@ from smartCar.smartcar_api_controller import smartcar_api_controller_bp
 app = Flask(__name__,
             static_url_path='',
             static_folder='static')
-CORS(app)
+cors = CORS(app, resources={r"/*/*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 app.register_blueprint(interac_api_controller_bp, url_prefix="/interac")
 app.register_blueprint(smartcar_api_controller_bp, url_prefix="/smartcar")
 

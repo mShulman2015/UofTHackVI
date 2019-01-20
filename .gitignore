@@ -1,3 +1,4 @@
 .idea/
 .vscode/
 interact/__pycache__
+__pycache__/

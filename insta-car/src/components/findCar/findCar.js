@@ -49,7 +49,8 @@ class FindCar extends React.Component {
             right: false,
             email:"",
             paid: false, 
-            referenceNumber: ""
+            referenceNumber: "",
+            paidMoney: false
         }
     }
 
@@ -125,6 +126,19 @@ class FindCar extends React.Component {
     }
 
     paidButton(){
+        if (this.state.paidMoney){
+            return(
+                <div>
+                    <Button variant="contained" color="primary" onClick={this.unlockCar}>
+                        Lock
+                    </Button>
+
+                    <Button variant="contained" color="primary" onClick={this.lockCar}>
+                        Unlock
+                    </Button>
+                </div>
+            )
+        }
         if (this.state.paid){
             return(
                 <Button variant="contained" color="primary" onClick={this.checkIfPaymentComplete}>
@@ -213,8 +227,18 @@ class FindCar extends React.Component {
         console.log(url)
         console.log("Checking")
         fetch(url).then(res => res.json()).then(res => {
-            console.log(res);
+            this.setState({paidMoney:res.payment_complete}, console.log(this.state.paidMoney));
         })
+    }
+
+    lockCar = () => {
+        let url = "https://www.mdshulman.com/smartcar/lock?id=" + this.state.vehicle_info[0][0];
+        fetch(url, {method:"POST"})
+    }
+
+    unlockCar= () => {
+        let url = "https://www.mdshulman.com/smartcar/unlock?id=" + this.state.vehicle_info[0][0];
+        fetch(url, {method:"POST"})
     }
 
     onMarkerClick = (props, marker, e) => {

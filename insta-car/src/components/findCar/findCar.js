@@ -9,7 +9,8 @@ class FindCar extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            vehicles:[]
+            vehicles:[],
+            positions:[]
         }
     }
 
@@ -26,20 +27,21 @@ class FindCar extends React.Component{
       anchor: new this.props.google.maps.Point(32,32),
       scaledSize: new this.props.google.maps.Size(50,50)}}/>
 
-            <Marker
-            title={'The marker`s title will appear as a tooltip.'}
-            name={'SOMA'}
-            position={{lat: 44.659466,lng: -79.396923}} />
+            {this.displayVehicles()}
 
             </Map>
-                <h1>Hello World</h1>
-                {this.displayVehicles()}
             </div>
         )
     }
 
     displayVehicles(){
-        console.log(this.state.vehicles);
+        console.log(
+            "holy fuck"
+        );
+        console.log(this.state.positions);
+        return(
+            <Marker position={this.state.positions[0]}/>
+        )
     }
 
     componentDidMount(){
@@ -47,10 +49,21 @@ class FindCar extends React.Component{
         console.log(person);
     }
 
+    sortData(){
+        var position_curr = new Object();
+        var positions = []
+        let k = this.state.vehicles.map(element=>{
+            console.log(element[1].data);
+            position_curr = {lat:element[1].data.latitude, lng:element[1].data.longitude}
+            positions.push(position_curr)
+        })
+        this.setState({positions:positions}, this.displayVehicles)
+    }
+
     async getData(){
         let url="http://localhost:8000/location"
         fetch(url).then(res=>res.json()).then(res=>{
-            this.setState({vehicles:res}, console.log(this.state.vehicles))
+            this.setState({vehicles:res}, this.sortData)
         })
     }
 }

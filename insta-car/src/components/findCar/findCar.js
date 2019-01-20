@@ -50,7 +50,8 @@ class FindCar extends React.Component {
             email:"",
             paid: false, 
             referenceNumber: "",
-            paidMoney: false
+            paidMoney: false,
+            vehicle_picture: ""
         }
     }
 
@@ -147,6 +148,7 @@ class FindCar extends React.Component {
         }else{
             return(
                 <div className="stuff_align">
+                    <img src={this.state.vehicle_picture} width="300" height="250" className="imgStyle"></img>
                      <TextField
                         id="outlined-email-input"
                         label="Email ..."
@@ -204,6 +206,7 @@ class FindCar extends React.Component {
         let url2 = "https://www.mdshulman.com/smartcar/vehicle"
         fetch(url2).then(res => res.json()).then(res => {
             this.setState({ vehicle_info: res["data"] }, this.generateInfo)
+            this.setState({ vehicle_picture: res["picture"] })
         })
     }
 

@@ -1,25 +1,25 @@
 #!flask/bin/python
 import psycopg2
-from flask import Blueprint, Flask, request, jsonify
+from flask import Blueprint, Flask, request, jsonify, json, abort
 from interact.interac_api import Interac
-import threading
-import atexit
+# import threading
+# import atexit
 
 conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")
 
 interac_api_controller_bp = Blueprint("interac_api_controller", __name__)
 interac_api = Interac()
 
-POOL_TIME = 30 # Seconds
+# POOL_TIME = 30 # Seconds
 
 # variables that are accessible from anywhere
-unfulfilled_payment_requests = {}
+# unfulfilled_payment_requests = {}
 
 # lock to control access to variable
-data_lock = threading.Lock()
+# data_lock = threading.Lock()
 
 # thread handler
-check_completed_payments_thread = threading.Thread()
+# check_completed_payments_thread = threading.Thread()
 
 
 # def _interrupt():
@@ -74,10 +74,5 @@ def request_money():
 
 @interac_api_controller_bp.route('/notifications', methods=["POST"])
 def notifications():
-    print("i got notification")
-    print(request.data)
-    return jsonify({})
-
-# if __name__ == '__main__':
-#     app.run(port=8000)
-#     # app.run(debug=True)
+    interac_api.process_payment_notification(json.dumps(request.json))
+    abort(200)

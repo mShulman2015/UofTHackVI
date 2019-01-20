@@ -135,7 +135,10 @@ def vehicle():
 @smartcar_api_controller_bp.route('/unlock', methods=['POST'])
 def unlock_request():
     print(request.args.get('id'))
-    unlock_vehicle(request.args.get('id'))
+    k = unlock_vehicle(request.args.get('id'))
+    if (k == None):
+        return '', 200
+    return 'Cannot Unlock', 400
 
 
 def unlock_vehicle(vehicle_id):
@@ -143,10 +146,7 @@ def unlock_vehicle(vehicle_id):
     global refresh_token
     get_token()
     vehicle = smartcar.Vehicle(vehicle_id, access_token)
-    k = vehicle.unlock()
-    if (k == None):
-        return '', 200
-    return 'Cannot Unlock', 400
+    return vehicle.unlock()
 
 
 @smartcar_api_controller_bp.route('/lock', methods=['POST'])

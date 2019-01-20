@@ -49,7 +49,9 @@ class Interac:
                 unlock_vehicle(self.get_vehicle_id_with_payment_request_id(update["sourceMoneyRequestId"]))
 
     def get_vehicle_id_with_payment_request_id(self, payment_request_id):
-        pass
+        # TODO: Look at DB to see which vehicle ID is associated with the given payment request ID
+        # That will tell us which car the user has paid for. Make sure to store the requested car prior to sending the payment request
+        return "c4550682-1f76-4954-969d-6df89204c5ae"
 
     def _encode_secret_key(self, keyAndSalt):
         h = hashlib.sha256()

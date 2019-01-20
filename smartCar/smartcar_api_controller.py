@@ -54,7 +54,7 @@ def get_pic(query):
     response.raise_for_status()
     search_results = response.json()
     thumbnail_urls = [img["thumbnailUrl"] for img in search_results["value"][:16]]
-    return thumbnail_urls[1]
+    return thumbnail_urls[0]
 
 get_token()
 

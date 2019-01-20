@@ -203,7 +203,7 @@ class FindCar extends React.Component {
 
         let url2 = "https://www.mdshulman.com/smartcar/vehicle"
         fetch(url2).then(res => res.json()).then(res => {
-            this.setState({ vehicle_info: res }, this.generateInfo)
+            this.setState({ vehicle_info: res["data"] }, this.generateInfo)
         })
     }
 

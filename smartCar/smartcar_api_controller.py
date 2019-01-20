@@ -122,7 +122,8 @@ def vehicle():
     }
     '''
     print()
-    query = info["make"] + " " + info["model"]
+    query = info["make"] + " " + info["model"] + " " + info["year"]
+    print("QUERY: ", query)
     pic_url = get_pic(query)
     d = {
         "data": data,

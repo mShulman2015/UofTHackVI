@@ -61,7 +61,14 @@ class FindCar extends React.Component{
     }
 
     async getData(){
-        let url="http://localhost:8000/location"
+        let url = "https://www.mdshulman.com/smartcar/location"
+        fetch(url).then(res=>res.json()).then(res=>{
+            this.setState({vehicles:res}, this.sortData)
+        })
+    }
+
+    async getPhoto(){
+        let url = "https://www.mdshulman.com/smartcar/location"
         fetch(url).then(res=>res.json()).then(res=>{
             this.setState({vehicles:res}, this.sortData)
         })

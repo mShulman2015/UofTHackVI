@@ -8,12 +8,15 @@ import { Provider } from 'react-redux'
 import PropTypes from 'prop-types';
 
 import FindCar from './findCar/findCar';
+import CarRegistration from './carRegistration/carRegistration'
 
 // Just add your component onto a path below
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
+        
         <div>
+        <CarRegistration/>
         <Route exact path="/" component={FindCar} />
         </div>
     </Router>

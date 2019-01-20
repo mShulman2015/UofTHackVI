@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "@vtex/react-csv-parse": "^3.0.2",
+    "mdbreact": "^4.8.7",
     "oauthio-web": "^0.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-element-to-jsx-string": "^14.0.2",
+    "react-headroom": "^2.2.4",
     "react-scripts": "2.0.5"
   },
   "scripts": {

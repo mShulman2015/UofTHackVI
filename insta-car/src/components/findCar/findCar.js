@@ -92,7 +92,7 @@ class FindCar extends React.Component {
                 <Map google={this.props.google} zoom={16}
                     initialCenter={{ lat: 43.659466, lng: -79.396923 }}>
 
-                    <Marker onClick={this.onMarkerClick} name={'Current location'}
+                    <Marker name={'Current location'}
                         position={{ lat: 43.659466, lng: -79.396923 }}
                         icon={{
                             url: person,

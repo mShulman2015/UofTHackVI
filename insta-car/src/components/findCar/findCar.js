@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import "./findCar.css"
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -12,146 +12,190 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import NavigationIcon from '@material-ui/icons/Navigation';
+import Fab from '@material-ui/core/Fab';
+
+
 //import CarRegistration from "../carRegistration/carRegistration";
 var person = require('../assets/person.png');
 
+const drawerStyle = {
+    marginLeft: '50px',
+    marginRight: '50px'
+};
 
-class FindCar extends React.Component{
-    constructor(props){
+const inputStyle = {
+    marginLeft: '20px',
+    marginRight: '20px'
+};
+
+const btnStyle = {
+    width: '50%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+};
+
+class FindCar extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-            vehicles:[],
-            positions:[],
-            vehicle_info:[],
+        this.state = {
+            vehicles: [],
+            positions: [],
+            vehicle_info: [],
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            markerInfo:"",
+            markerInfo: "",
             right: false,
+            email:"",
         }
     }
 
     toggleDrawer = (side, open) => () => {
         console.log("shit fuck");
-      this.setState({
-        [side]: open,
-    }, console.log(this.state.right));
+        this.setState({
+            [side]: open,
+        }, console.log(this.state.right));
     };
 
-    render(){
+    render() {
         const sideList = (
-          <div>
-            <List>
-              {[this.state.markerInfo].map((text, index) => (
-                <ListItem key={text}>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
-            </List>
-            <Divider />
-          </div>
-        );
-        return(
             <div>
-            <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
-              <div
-                tabIndex={0}
-                role="button"
-                onClick={this.toggleDrawer('right', false)}
-                onKeyDown={this.toggleDrawer('right', false)}
-              >
-                {sideList}
-              </div>
-            </Drawer>
-            <Map google={this.props.google} zoom={16}
-            initialCenter={{lat: 43.659466,lng: -79.396923}}>
-
-            <Marker onClick={this.onMarkerClick} name={'Current location'}
-            position={{lat: 43.659466,lng: -79.396923}}
-            icon={{
-      url: person,
-      anchor: new this.props.google.maps.Point(32,32),
-      scaledSize: new this.props.google.maps.Size(50,50)}}/>
-
-            {this.displayVehicles()}
-
-            <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}>
-            <div>
-              <h1>{this.state.selectedPlace.name}</h1>
+                <List>
+                    {[this.state.markerInfo].map((text, index) => (
+                        <ListItem key={text}>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider />
             </div>
-        </InfoWindow>
+        );
+        return (
+            <div>
+                <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        onClick={this.toggleDrawer('right', false)}
+                        onKeyDown={this.toggleDrawer('right', false)}
+                        style={drawerStyle}>
+                        {sideList}
+                    </div>
+                    <TextField
+                        id="outlined-email-input"
+                        label="Email ..."
+                        type="email"
+                        name="email"
+                        autoComplete="email"
+                        margin="normal"
+                        variant="outlined"
+                        style={inputStyle}
+                        value={this.state.email}
+                        onChange={(event)=>{this.setState({email:event.target.value})}}
+                    />
+                    <Fab variant="extended" color="primary" aria-label="Add" style={btnStyle} onClick={this.sendPaymentRequest}><NavigationIcon />
+                        Request 
+        </Fab>
+                </Drawer>
+                <Map google={this.props.google} zoom={16}
+                    initialCenter={{ lat: 43.659466, lng: -79.396923 }}>
 
-            </Map>
+                    <Marker onClick={this.onMarkerClick} name={'Current location'}
+                        position={{ lat: 43.659466, lng: -79.396923 }}
+                        icon={{
+                            url: person,
+                            anchor: new this.props.google.maps.Point(32, 32),
+                            scaledSize: new this.props.google.maps.Size(50, 50)
+                        }} />
+
+                    {this.displayVehicles()}
+
+                    <InfoWindow
+                        marker={this.state.activeMarker}
+                        visible={this.state.showingInfoWindow}>
+                        <div>
+                            <h1>{this.state.selectedPlace.name}</h1>
+                        </div>
+                    </InfoWindow>
+
+                </Map>
             </div>
         )
     }
 
-    displayVehicles(){
+    displayVehicles() {
         console.log(
             "holy fuck"
         );
         console.log(this.state.positions);
-        return(
-            <Marker name={this.state.markerInfo} position={this.state.positions[0]} onClick={this.onMarkerClick}/>
+        return (
+            <Marker name={this.state.markerInfo} position={this.state.positions[0]} onClick={this.onMarkerClick} />
         )
     }
 
-    generateInfo(){
+    generateInfo() {
         console.log(this.state.vehicle_info[0]);
         let name = ""
         //console.log(this.state.vehicle_info[0][1]);
-        if (this.state.vehicle_info[0]!==undefined){
+        if (this.state.vehicle_info[0] !== undefined) {
             name = this.state.vehicle_info[0][1].year + " " + this.state.vehicle_info[0][1].make + " " + this.state.vehicle_info[0][1].model
         }
-        this.setState({markerInfo:name})
+        this.setState({ markerInfo: name })
         //console.log(name)
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getData()
         console.log(person);
     }
 
-    sortData(){
+    sortData() {
         var position_curr = new Object();
         var positions = []
-        let k = this.state.vehicles.map(element=>{
+        this.state.vehicles.map(element => {
             console.log(element[1].data);
-            position_curr = {lat:element[1].data.latitude, lng:element[1].data.longitude}
+            position_curr = { lat: element[1].data.latitude, lng: element[1].data.longitude }
             positions.push(position_curr)
         })
-        this.setState({positions:positions}, this.displayVehicles)
+        this.setState({ positions: positions }, this.displayVehicles)
     }
 
-    async getData(){
+    async getData() {
         let url = "https://www.mdshulman.com/smartcar/location"
-        fetch(url).then(res=>res.json()).then(res=>{
-            this.setState({vehicles:res}, this.sortData)
+        fetch(url).then(res => res.json()).then(res => {
+            this.setState({ vehicles: res }, this.sortData)
         })
 
-        let url2="https://www.mdshulman.com/smartcar/vehicle"
-        fetch(url2).then(res=>res.json()).then(res=>{
-            this.setState({vehicle_info:res}, this.generateInfo)
+        let url2 = "https://www.mdshulman.com/smartcar/vehicle"
+        fetch(url2).then(res => res.json()).then(res => {
+            this.setState({ vehicle_info: res }, this.generateInfo)
+        })
+    }
+
+    sendPaymentRequest = ()=> {
+        let url = "https://www.mdshulman.com/interac/request-money?amount=68.2&email=" + this.state.email;
+        console.log(url)
+        fetch(url).then(res => res.json()).then(res => {
+            console.log(res)
         })
     }
 
 
-  onMarkerClick = (props, marker, e) =>{
-      //this.toggleDrawer('right', true)
-    this.setState({
-        right:true,
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-    //console.log("shit")
+    onMarkerClick = (props, marker, e) => {
+        //this.toggleDrawer('right', true)
+        this.setState({
+            right: true,
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true
+        });
+        //console.log("shit")
 
     }
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyDw7rz7Y3P2TO0vSWlJ1tGdlSgDtiV_ryE")
+    apiKey: ("AIzaSyDw7rz7Y3P2TO0vSWlJ1tGdlSgDtiV_ryE")
 })(FindCar)

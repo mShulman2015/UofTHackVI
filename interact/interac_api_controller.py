@@ -5,7 +5,7 @@ from interact.interac_api import Interac
 # import threading
 # import atexit
 
-conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")
+# conn = psycopg2.connect(database = "instacar", user = "instacar", password="instacar", host = "127.0.0.1", port = "5432")
 
 interac_api_controller_bp = Blueprint("interac_api_controller", __name__)
 interac_api = Interac()

@@ -76,7 +76,9 @@ def request_money():
 @interac_api_controller_bp.route('/payment-complete', methods=["GET"])
 def is_payment_complete():
     money_req = interac_api.get_money_request(request.args.get("reference_num"))
+    print(money_req, request.args.get("reference_num"))
     if "status" in money_req and (money_req["status"] == 7 or money_req["status"] == 3 or money_req["status"] == 8):
+        print(money_req["status"])
         return jsonify({"payment_complete": True})
     return jsonify({"payment_complete": False})
 

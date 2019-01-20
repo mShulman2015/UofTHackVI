@@ -21,7 +21,7 @@ client = smartcar.AuthClient(
 )
 
 def get_token():
-    file = open("./tokens.txt", 'r')
+    file = open("./smartCar/tokens.txt", 'r')
     global access_token
     global refresh_token
     access_token = file.readline().strip()
@@ -31,7 +31,7 @@ def get_token():
     file.close()
 
 def set_tokens(access, refresh):
-    file = open('./tokens.txt', 'w')
+    file = open('./smartCar/tokens.txt', 'w')
     file.write(access+"\n")
     file.write(refresh)
     file.close()

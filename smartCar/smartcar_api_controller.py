@@ -121,8 +121,7 @@ def vehicle():
         "year": 2014
     }
     '''
-    print()
-    query = info["make"].lower() + " " + "model s" # [model] - this is the real car. the model is hardcoded bc the simulated cars in test keys are different than the one at the hackathon ???
+    query = info["make"].lower() + info["model"]
     print("QUERY:", query)
     pic_url = get_pic(query)
     d = {

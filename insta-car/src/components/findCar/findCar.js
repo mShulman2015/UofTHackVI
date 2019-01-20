@@ -3,7 +3,18 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import "./findCar.css"
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+//import CarRegistration from "../carRegistration/carRegistration";
 var person = require('../assets/person.png');
+
 
 class FindCar extends React.Component{
     constructor(props){
@@ -15,13 +26,43 @@ class FindCar extends React.Component{
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            markerInfo:""
+            markerInfo:"",
+            right: false,
         }
     }
 
+    toggleDrawer = (side, open) => () => {
+        console.log("shit fuck");
+      this.setState({
+        [side]: open,
+    }, console.log(this.state.right));
+    };
+
     render(){
+        const sideList = (
+          <div>
+            <List>
+              {[this.state.markerInfo].map((text, index) => (
+                <ListItem key={text}>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+          </div>
+        );
         return(
             <div>
+            <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
+              <div
+                tabIndex={0}
+                role="button"
+                onClick={this.toggleDrawer('right', false)}
+                onKeyDown={this.toggleDrawer('right', false)}
+              >
+                {sideList}
+              </div>
+            </Drawer>
             <Map google={this.props.google} zoom={16}
             initialCenter={{lat: 43.659466,lng: -79.396923}}>
 
@@ -90,15 +131,8 @@ class FindCar extends React.Component{
         fetch(url).then(res=>res.json()).then(res=>{
             this.setState({vehicles:res}, this.sortData)
         })
-    }
 
-    async getPhoto(){
-        let url = "https://www.mdshulman.com/smartcar/location"
-        fetch(url).then(res=>res.json()).then(res=>{
-            this.setState({vehicles:res}, this.sortData)
-        })
-
-        let url2="http://localhost:8000/vehicle"
+        let url2="https://www.mdshulman.com/smartcar/vehicle"
         fetch(url2).then(res=>res.json()).then(res=>{
             this.setState({vehicle_info:res}, this.generateInfo)
         })
@@ -106,12 +140,15 @@ class FindCar extends React.Component{
 
 
   onMarkerClick = (props, marker, e) =>{
+      //this.toggleDrawer('right', true)
     this.setState({
+        right:true,
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
-    console.log("shit")
+    //console.log("shit")
+
     }
 }
 

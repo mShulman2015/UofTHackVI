@@ -8,8 +8,8 @@ import { Provider } from 'react-redux'
 import PropTypes from 'prop-types';
 
 import FindCar from './findCar/findCar';
-import CarRegistration from './carRegistration/carRegistration';
 import InstaCarNavbar from './instacarNavbar/instacarNavbar';
+//import CarRegistration from './carRegistration/carRegistration'
 
 // Just add your component onto a path below
 const Root = ({ store }) => (
@@ -17,9 +17,7 @@ const Root = ({ store }) => (
     <Router>
 
         <div>
-        {/* <CarRegistration/> */}
-        <InstaCarNavbar />
-        
+        <InstaCarNavbar/>
         <Route exact path="/" component={FindCar} />
         </div>
     </Router>

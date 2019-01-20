@@ -121,19 +121,10 @@ def unlock_vehicle(vehicle_id):
     global access_token
     global refresh_token
     get_token()
-<<<<<<< HEAD:smartCar/main.py
-    print(request.args.get('id'))
-    vehicle = smartcar.Vehicle(request.args.get('id'), access_token)
-    k = vehicle.unlock()
-    if (k==None):
-        return '',200
-=======
-
     vehicle = smartcar.Vehicle(vehicle_id, access_token)
     k = vehicle.unlock()
     if (k == None):
         return '', 200
->>>>>>> 90070ad467f73634e86ff98d7770bec601b969e3:smartCar/smartcar_api_controller.py
     return 'Cannot Unlock', 400
 
 

@@ -39,7 +39,9 @@ class Interac:
 
     def get_money_request(self, reference_number=None):
         request_id = str(uuid.uuid4())
-        return moneyRequests.getMoneyRequest(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, referenceNumber=reference_number)
+        print("REQUEST ID AND REF NUM", request_id, reference_number)
+        data =  moneyRequests.getMoneyRequest(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, referenceNumber=reference_number)
+        print("DATA", data)
 
     def process_payment_notification(self, payment_data):
         for update in payment_data["moneyRequestUpdates"]:

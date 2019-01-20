@@ -1,0 +1,7 @@
+.stuff_align{
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
+    display: block !important;
+}

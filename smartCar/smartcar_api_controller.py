@@ -39,6 +39,23 @@ def set_tokens(access, refresh):
     access_token = access
     refresh_token = refresh
 
+import requests
+
+
+def get_pic(query):
+    subscription_key = "521bac81fa9f44c6848928b3d0037d15"
+    assert subscription_key
+
+    search_url = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
+    search_term = query
+    headers = {"Ocp-Apim-Subscription-Key": subscription_key}
+    params = {"q": search_term, "license": "public", "imageType": "photo"}
+    response = requests.get(search_url, headers=headers, params=params)
+    response.raise_for_status()
+    search_results = response.json()
+    thumbnail_urls = [img["thumbnailUrl"] for img in search_results["value"][:16]]
+    return thumbnail_urls[0]
+
 get_token()
 
 @smartcar_api_controller_bp.route('/token', methods=['POST'])
@@ -105,7 +122,9 @@ def vehicle():
     }
     '''
     print()
-
+    query = info["make"] + " " + info["model"]
+    pic_url = get_pic(query)
+    data["picture"] = pic_url
     return jsonify(data)
 
 @smartcar_api_controller_bp.route('/unlock', methods=['POST'])

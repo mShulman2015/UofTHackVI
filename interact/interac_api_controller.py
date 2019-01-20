@@ -63,6 +63,7 @@ interac_api = Interac()
 # app = Flask(__name__)
 
 
+
 @interac_api_controller_bp.route('/request-money', methods=["GET"])
 def request_money():
     amount = request.args.get("amount")
@@ -70,6 +71,14 @@ def request_money():
 
     req_link = interac_api.send_money_request(amount, email)
     return jsonify({"request_link": req_link})
+
+
+@interac_api_controller_bp.route('/payment-complete', methods=["GET"])
+def is_payment_complete():
+    money_req = interac_api.get_money_request(request.args.get("reference_num"))
+    if "status" in money_req and (money_req["status"] == 7 or money_req["status"] == 3):
+        return jsonify({"payment_complete": True})
+    return jsonify({"payment_complete": False})
 
 
 @interac_api_controller_bp.route('/notifications', methods=["POST"])

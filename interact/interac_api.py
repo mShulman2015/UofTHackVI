@@ -39,7 +39,6 @@ class Interac:
 
     def get_money_request(self, reference_number=None):
         request_id = str(uuid.uuid4())
-
         return moneyRequests.getMoneyRequest(self.access_token, self.third_party_access_id, request_id, self.device_id, self.api_registration_id, referenceNumber=reference_number)
 
     def process_payment_notification(self, payment_data):
@@ -67,6 +66,6 @@ class Interac:
         return "".join(chars)
 
 
-# if __name__ == "__main__":
-#     i = Interac()
-#     print(i.get_money_request('CA1MRVNvTbA3'))
+if __name__ == "__main__":
+    i = Interac()
+    print(i.get_money_request('CA1MRWrWTmHw'))

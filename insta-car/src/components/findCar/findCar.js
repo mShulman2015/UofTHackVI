@@ -182,7 +182,6 @@ class FindCar extends React.Component {
         })
     }
 
-
     onMarkerClick = (props, marker, e) => {
         //this.toggleDrawer('right', true)
         this.setState({

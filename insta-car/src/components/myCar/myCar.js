@@ -40,7 +40,7 @@ class MyCar extends React.Component{
         let url = "https://www.mdshulman.com/smartcar/vehicle"
         fetch(url).then(res=>res.json()).then(res=>{
             console.log(res[0][1]);
-            this.setState({vehicle_info:res[0][1]})
+            this.setState({vehicle_info:res["data"][0][1]})
         })
     }
 }

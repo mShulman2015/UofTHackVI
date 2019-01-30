@@ -43,7 +43,7 @@ import requests
 
 
 def get_pic(query):
-    subscription_key = "521bac81fa9f44c6848928b3d0037d15"
+    subscription_key = ""
     assert subscription_key
 
     search_url = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
